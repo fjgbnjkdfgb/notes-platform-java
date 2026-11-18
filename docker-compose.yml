@@ -1,0 +1,98 @@
+services:
+  db:
+    image: postgres:16
+    container_name: notes-db
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "1234"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d app"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    networks:
+      - app_net
+
+  users:
+    build: ./users-service
+    container_name: notes-users
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/app"
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "1234"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app_net
+
+  tags:
+    build: ./tags-service
+    container_name: notes-tags
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/app"
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "1234"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app_net
+
+  notes:
+    build: ./notes-service
+    container_name: notes-notes
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://db:5432/app"
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: "1234"
+      USERS_SERVICE_URL: "http://users:8080"
+      TAGS_SERVICE_URL: "http://tags:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+      users:
+        condition: service_started
+      tags:
+        condition: service_started
+    networks:
+      - app_net
+
+  search:
+    build: ./search-service
+    container_name: notes-search
+    environment:
+      NOTES_SERVICE_URL: "http://notes:8080"
+      USERS_SERVICE_URL: "http://users:8080"
+    depends_on:
+      notes:
+        condition: service_started
+      users:
+        condition: service_started
+    networks:
+      - app_net
+
+  gateway:
+    build: ./gateway
+    container_name: notes-gateway
+    ports:
+      - "8080:80"
+    volumes:
+      - ./gateway/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - users
+      - tags
+      - notes
+      - search
+    networks:
+      - app_net
+
+volumes:
+  db_data:
+
+networks:
+  app_net:
+    driver: bridge
