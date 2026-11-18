@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: search-service
+
+services:
+  notes_url: ${NOTES_SERVICE_URL:http://notes:8080}
+  users_url: ${USERS_SERVICE_URL:http://users:8080}
