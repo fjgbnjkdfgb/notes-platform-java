@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: notes-service
+  sql:
+    init:
+      mode: always
+
+services:
+  users_url: ${USERS_SERVICE_URL:http://users:8080}
+  tags_url: ${TAGS_SERVICE_URL:http://tags:8080}
