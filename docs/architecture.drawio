@@ -1,0 +1,176 @@
+<mxfile host="app.diagrams.net" agent="notes-platform-java-c4" version="24.7.7">
+  <diagram id="c4-context" name="C4 Context">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" hover="1" clip="1" resize="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" value="C4 Context — NotesPlatform" style="text;html=1;fontSize=20;fontStyle=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user" value="&lt;b&gt;Пользователь&lt;/b&gt;&lt;div&gt;пишет заметки и ищет по ним&lt;/div&gt;&lt;div&gt;curl / Postman&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="60" y="260" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sys" value="&lt;b&gt;NotesPlatform&lt;/b&gt;&lt;div&gt;сервис заметок с тегами&lt;/div&gt;&lt;div&gt;и поиском по содержимому&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;4 микросервиса на Java 21&lt;/div&gt;&lt;div&gt;API Gateway (nginx), PostgreSQL 16&lt;/div&gt;&lt;div&gt;запуск: Docker Compose&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="420" y="230" width="340" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="HTTP :8080&lt;div&gt;/users, /notes, /tags, /search&lt;/div&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=11;" edge="1" parent="1" source="user" target="sys">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="c4-container" name="C4 Container">
+    <mxGraphModel dx="1500" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" hover="1" clip="1" resize="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" value="C4 Container — NotesPlatform" style="text;html=1;fontSize=20;fontStyle=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="user" value="&lt;b&gt;Пользователь&lt;/b&gt;&lt;div&gt;curl / Postman&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="40" y="360" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="gw" value="&lt;b&gt;API Gateway&lt;/b&gt;&lt;div&gt;[nginx :8080]&lt;/div&gt;&lt;div&gt;маршрутизация на 4 сервиса&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C3C3C;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="250" y="350" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="users" value="&lt;b&gt;users-service&lt;/b&gt;&lt;div&gt;[Java 21, Spring Boot]&lt;/div&gt;&lt;div&gt;пользователи&lt;/div&gt;&lt;div&gt;таблица: users&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C3C3C;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="520" y="80" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="notes" value="&lt;b&gt;notes-service&lt;/b&gt;&lt;div&gt;[Java 21, Spring Boot]&lt;/div&gt;&lt;div&gt;CRUD заметок, поиск,&lt;/div&gt;&lt;div&gt;связь с тегами&lt;/div&gt;&lt;div&gt;таблицы: notes, note_tags&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C3C3C;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="520" y="240" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="tags" value="&lt;b&gt;tags-service&lt;/b&gt;&lt;div&gt;[Java 21, Spring Boot]&lt;/div&gt;&lt;div&gt;реестр тегов и&lt;/div&gt;&lt;div&gt;статистика&lt;/div&gt;&lt;div&gt;таблица: tags&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C3C3C;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="520" y="410" width="200" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="search" value="&lt;b&gt;search-service&lt;/b&gt;&lt;div&gt;[Java 21, Spring Boot]&lt;/div&gt;&lt;div&gt;поиск через notes-service,&lt;/div&gt;&lt;div&gt;авторство и фасеты&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C3C3C;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="520" y="575" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="db" value="&lt;b&gt;PostgreSQL 16&lt;/b&gt;&lt;div&gt;[postgres:16]&lt;/div&gt;&lt;div&gt;база app:&lt;/div&gt;&lt;div&gt;users, notes, note_tags, tags&lt;/div&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#438DD5;strokeColor=#3C3C3C;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="880" y="290" width="190" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="vol" value="Volume&lt;b&gt; db_data&lt;/b&gt;&lt;div&gt;данные живут&lt;/div&gt;&lt;div&gt;между рестартами&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#D4F1FF;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="890" y="510" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="x1" value="HTTP :8080" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=11;" edge="1" parent="1" source="user" target="gw">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x2" value="/users/" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.1;entryX=0;entryY=0.75;fontSize=11;" edge="1" parent="1" source="gw" target="users">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x3" value="/notes/" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.36;entryX=0;entryY=0.75;fontSize=11;" edge="1" parent="1" source="gw" target="notes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x4" value="/tags/" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.64;entryX=0;entryY=0.75;fontSize=11;" edge="1" parent="1" source="gw" target="tags">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x5" value="/search/" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.9;entryX=0;entryY=0.75;fontSize=11;" edge="1" parent="1" source="gw" target="search">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x6" value="HTTP GET /users/{id}&lt;div&gt;проверка автора&lt;/div&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0;exitY=0.25;entryX=1;entryY=0.75;fontSize=11;strokeColor=#0B4884;" edge="1" parent="1" source="notes" target="users">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x7" value="HTTP POST /resolve&lt;div&gt;теги заметки&lt;/div&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0;exitY=0.75;entryX=1;entryY=0.25;fontSize=11;strokeColor=#0B4884;" edge="1" parent="1" source="notes" target="tags">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x8" value="HTTP GET /notes/search" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0;exitY=0.25;entryX=0;entryY=0.75;fontSize=11;strokeColor=#0B4884;" edge="1" parent="1" source="search" target="notes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x9" value="HTTP GET /users/{id}&lt;div&gt;имя автора&lt;/div&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.25;entryX=1;entryY=0.25;fontSize=11;strokeColor=#0B4884;" edge="1" parent="1" source="search" target="users">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x10" value="SQL (JDBC)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.2;fontSize=11;" edge="1" parent="1" source="users" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x11" value="SQL (JDBC)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=11;" edge="1" parent="1" source="notes" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x12" value="SQL (JDBC)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.8;fontSize=11;" edge="1" parent="1" source="tags" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x13" value="хранит" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=11;dashed=1;" edge="1" parent="1" source="db" target="vol">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="c4-component" name="C4 Component">
+    <mxGraphModel dx="1700" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" hover="1" clip="1" resize="1">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" value="C4 Component — внутреннее устройство сервисов" style="text;html=1;fontSize=20;fontStyle=1;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="u_box" value="users-service" style="rounded=1;dashed=1;fillColor=none;strokeColor=#438DD5;verticalAlign=top;align=left;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="320" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="u_api" value="&lt;b&gt;Users API&lt;/b&gt;&lt;div&gt;POST /users, GET /users/{id}&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="80" y="150" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="u_repo" value="&lt;b&gt;UsersRepository&lt;/b&gt;&lt;div&gt;JdbcTemplate, users&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="80" y="250" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n_box" value="notes-service" style="rounded=1;dashed=1;fillColor=none;strokeColor=#438DD5;verticalAlign=top;align=left;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="100" width="340" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="n_api" value="&lt;b&gt;Notes API&lt;/b&gt;&lt;div&gt;CRUD, /notes/search&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="440" y="150" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="n_repo" value="&lt;b&gt;NotesRepository&lt;/b&gt;&lt;div&gt;notes, note_tags&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="440" y="250" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n_clients" value="&lt;b&gt;UsersClient, TagsClient&lt;/b&gt;&lt;div&gt;HttpClient&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="440" y="335" width="260" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="tg_box" value="tags-service" style="rounded=1;dashed=1;fillColor=none;strokeColor=#438DD5;verticalAlign=top;align=left;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="100" width="320" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="tg_api" value="&lt;b&gt;Tags API&lt;/b&gt;&lt;div&gt;POST /resolve, GET /tags&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="820" y="150" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tg_repo" value="&lt;b&gt;TagRepository&lt;/b&gt;&lt;div&gt;tags + счётчик usage_count&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="820" y="250" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s_box" value="search-service" style="rounded=1;dashed=1;fillColor=none;strokeColor=#438DD5;verticalAlign=top;align=left;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="470" width="480" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="s_api" value="&lt;b&gt;Search API&lt;/b&gt;&lt;div&gt;POST /search&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="80" y="520" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s_clients" value="&lt;b&gt;NotesClient, UsersClient&lt;/b&gt;&lt;div&gt;HttpClient&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="80" y="610" width="400" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="s_facets" value="&lt;b&gt;Facet Builder&lt;/b&gt;&lt;div&gt;счётчики тегов в результатах&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#85BBF0;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="80" y="690" width="400" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="t_users" value="&lt;b&gt;users&lt;/b&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#D4F1FF;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="920" y="510" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t_notes" value="&lt;b&gt;notes, note_tags&lt;/b&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#D4F1FF;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="920" y="620" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="t_tags" value="&lt;b&gt;tags&lt;/b&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#D4F1FF;strokeColor=#3C3C3C;" vertex="1" parent="1">
+          <mxGeometry x="920" y="730" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="c1" value="SQL" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;fontSize=11;" edge="1" parent="1" source="u_api" target="u_repo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" value="HTTP" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=11;strokeColor=#0B4884;" edge="1" parent="1" source="n_clients" target="u_repo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="HTTP" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=11;strokeColor=#0B4884;" edge="1" parent="1" source="n_clients" target="tg_api">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="SQL" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=11;" edge="1" parent="1" source="n_repo" target="t_notes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" value="HTTP" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;fontSize=11;strokeColor=#0B4884;" edge="1" parent="1" source="s_clients" target="n_repo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" value="SQL" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;fontSize=11;" edge="1" parent="1" source="tg_repo" target="t_tags">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

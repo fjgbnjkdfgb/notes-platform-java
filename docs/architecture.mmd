@@ -1,0 +1,21 @@
+flowchart LR
+    client["Клиент<br/>curl / Postman"]
+    gateway["API Gateway<br/>nginx :8080"]
+    users["users-service<br/>Java 21"]
+    notes["notes-service<br/>Java 21"]
+    tags["tags-service<br/>Java 21"]
+    search["search-service<br/>Java 21"]
+    db[("PostgreSQL 16<br/>volume db_data")]
+
+    client -->|HTTP :8080| gateway
+    gateway -->|/users/| users
+    gateway -->|/notes/| notes
+    gateway -->|/tags/| tags
+    gateway -->|/search/| search
+    notes -->|HTTP: проверить автора| users
+    notes -->|HTTP: резолвинг тегов| tags
+    search -->|HTTP: искать заметки| notes
+    search -->|HTTP: имя автора| users
+    users --> db
+    notes --> db
+    tags --> db
