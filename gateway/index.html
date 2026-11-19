@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NotesPlatform</title>
+<style>
+:root{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#111;background:#fff}
+*{box-sizing:border-box}
+body{max-width:680px;margin:64px auto;padding:0 20px;font-size:14px;line-height:1.5}
+h1{font-size:16px;font-weight:600;margin:0 0 32px}
+section{border-top:1px solid #ddd;padding:16px 0}
+label{display:block;margin-bottom:8px}
+input,textarea{display:block;width:100%;padding:6px 8px;border:1px solid #bbb;background:#fff;font:inherit;margin-bottom:8px}
+textarea{min-height:70px;resize:vertical}
+button{font:inherit;padding:6px 12px;border:1px solid #111;background:#fff;cursor:pointer;margin-right:8px}
+button:hover{background:#111;color:#fff}
+pre{white-space:pre-wrap;word-break:break-word;border-top:1px solid #ddd;padding-top:16px;margin:0}
+</style>
+</head>
+<body>
+<h1>NotesPlatform</h1>
+
+<section>
+<label>Пользователь</label>
+<input id="username" placeholder="alice">
+<button onclick="create_user()">Создать пользователя</button>
+</section>
+
+<section>
+<label>Заметка</label>
+<input id="user_id" placeholder="user_id">
+<input id="title" placeholder="заголовок">
+<textarea id="content" placeholder="текст"></textarea>
+<input id="tags" placeholder="теги через запятую">
+<button onclick="create_note()">Создать заметку</button>
+</section>
+
+<section>
+<label>Поиск</label>
+<input id="query" placeholder="поиск по тексту">
+<input id="tag" placeholder="фильтр по тегу">
+<button onclick="run_search()">Найти</button>
+<button onclick="load_notes()">Все заметки</button>
+<button onclick="load_tags()">Теги</button>
+</section>
+
+<pre id="out"></pre>
+
+<script>
+const out = document.getElementById('out');
+
+function value(id) { return document.getElementById(id).value.trim(); }
+
+function show(status, path, body) {
+    out.textContent = status + ' ' + path + '\n' + JSON.stringify(body, null, 2);
+}
+
+async function request(method, path, body) {
+    const options = { method: method, headers: { 'Content-Type': 'application/json' } };
+    if (body !== null) options.body = JSON.stringify(body);
+    const res = await fetch(path, options);
+    const text = await res.text();
+    let parsed = text;
+    try { parsed = JSON.parse(text); } catch (e) {}
+    show(res.status, path, parsed);
+    return parsed;
+}
+
+async function create_user() {
+    const body = await request('POST', '/users/users', { username: value('username') });
+    if (body && body.id) document.getElementById('user_id').value = body.id;
+}
+
+async function create_note() {
+    const tags = value('tags').split(',').map(t => t.trim()).filter(t => t.length > 0);
+    await request('POST', '/notes/notes', {
+        user_id: Number(value('user_id')) || 0,
+        title: value('title'),
+        content: value('content'),
+        tags: tags
+    });
+}
+
+async function run_search() {
+    await request('POST', '/search/search', {
+        query: value('query') || null,
+        user_id: Number(value('user_id')) || null,
+        tag: value('tag') || null
+    });
+}
+
+async function load_notes() {
+    await request('GET', '/notes/notes', null);
+}
+
+async function load_tags() {
+    await request('GET', '/tags/tags', null);
+}
+</script>
+</body>
+</html>

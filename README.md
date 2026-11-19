@@ -55,7 +55,9 @@ Java 21, Spring Boot 3.3 (Web + JDBC), PostgreSQL 16, Docker, Docker Compose, ng
 docker compose up --build
 ```
 
-Приложение доступно на `http://localhost:8080`. Всё завершается одной командой:
+Приложение доступно на `http://localhost:8080`. Там же открывается минимальная HTML-страница — три блока: пользователь, заметка, поиск. Кнопки ходят в тот же API, что и curl, а снизу печатается код ответа и JSON.
+
+Всё завершается одной командой:
 
 ```bash
 docker compose down
@@ -155,7 +157,7 @@ curl http://localhost:8080/notes/notes/1
 
 ```
 docker-compose.yml
-gateway/          nginx.conf + Dockerfile
+gateway/          nginx.conf + index.html + Dockerfile
 users-service/    Program на Spring Boot, Dockerfile, schema.sql
 notes-service/
 tags-service/
